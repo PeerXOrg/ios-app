@@ -3,9 +3,10 @@ import ProjectDescription
 let teamID = "MYKD6MLV98"
 let parentBundleID = "me.nickaroot.peerx"
 let clipBundleID = "me.nickaroot.peerx.Clip"
-let deploymentTarget: DeploymentTargets = .iOS("26.4")
+let deploymentTargets: DeploymentTargets = .iOS("26.4")
+let destinations: Destinations = [.iPhone]
 
-let baseSettings: SettingsDictionary = [
+let projectSettings: SettingsDictionary = [
     "DEVELOPMENT_TEAM": .string(teamID),
     "SWIFT_VERSION": "6.0",
     "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
@@ -16,14 +17,17 @@ let baseSettings: SettingsDictionary = [
     "LOCALIZATION_PREFERS_STRING_CATALOGS": "YES",
     "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS": "YES",
     "ENABLE_USER_SCRIPT_SANDBOXING": "YES",
+    "MARKETING_VERSION": "1.0",
+    "CURRENT_PROJECT_VERSION": "1",
+    "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+    "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
 ]
 
 let parentInfoPlist: [String: Plist.Value] = [
     "CFBundleLocalizations": .array([.string("en"), .string("ru")]),
     "ITSAppUsesNonExemptEncryption": .boolean(false),
-    "UIApplicationSceneManifest_Generation": .boolean(true),
     "UIApplicationSupportsIndirectInputEvents": .boolean(true),
-    "UILaunchScreen_Generation": .boolean(true),
+    "UILaunchScreen": .dictionary([:]),
     "UIStatusBarStyle": "UIStatusBarStyleDefault",
     "UISupportedInterfaceOrientations": .array([.string("UIInterfaceOrientationPortrait")]),
     "UIUserInterfaceStyle": "Dark",
@@ -31,10 +35,10 @@ let parentInfoPlist: [String: Plist.Value] = [
 
 let parent = Target.target(
     name: "PeerX",
-    destinations: .iOS,
+    destinations: destinations,
     product: .app,
     bundleId: parentBundleID,
-    deploymentTargets: deploymentTarget,
+    deploymentTargets: deploymentTargets,
     infoPlist: .extendingDefault(with: parentInfoPlist),
     sources: ["PeerX/**"],
     resources: [
@@ -46,27 +50,19 @@ let parent = Target.target(
         .package(product: "PeerXCore"),
         .target(name: "PeerXClip"),
     ],
-    settings: .settings(
-        base: baseSettings.merging([
-            "MARKETING_VERSION": "1.0",
-            "CURRENT_PROJECT_VERSION": "1",
-            "TARGETED_DEVICE_FAMILY": "1",
-            "ENABLE_APP_SANDBOX": "YES",
-            "ENABLE_HARDENED_RUNTIME": "YES",
-            "ENABLE_USER_SELECTED_FILES": "readonly",
-            "REGISTER_APP_GROUPS": "YES",
-            "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
-            "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
-        ])
-    )
+    settings: .settings(base: [
+        "ENABLE_APP_SANDBOX": "YES",
+        "ENABLE_HARDENED_RUNTIME": "YES",
+        "ENABLE_USER_SELECTED_FILES": "readonly",
+        "REGISTER_APP_GROUPS": "YES",
+    ])
 )
 
 let clipInfoPlist: [String: Plist.Value] = [
     "CFBundleDisplayName": "PeerX",
     "CFBundleLocalizations": .array([.string("en"), .string("ru")]),
-    "UIApplicationSceneManifest_Generation": .boolean(true),
     "UIApplicationSupportsIndirectInputEvents": .boolean(true),
-    "UILaunchScreen_Generation": .boolean(true),
+    "UILaunchScreen": .dictionary([:]),
     "UISupportedInterfaceOrientations": .array([.string("UIInterfaceOrientationPortrait")]),
     "UIUserInterfaceStyle": "Dark",
     "NSAppClip": .dictionary([
@@ -77,10 +73,10 @@ let clipInfoPlist: [String: Plist.Value] = [
 
 let clip = Target.target(
     name: "PeerXClip",
-    destinations: .iOS,
+    destinations: destinations,
     product: .appClip,
     bundleId: clipBundleID,
-    deploymentTargets: deploymentTarget,
+    deploymentTargets: deploymentTargets,
     infoPlist: .extendingDefault(with: clipInfoPlist),
     sources: ["PeerXClip/**"],
     resources: [
@@ -90,16 +86,7 @@ let clip = Target.target(
     entitlements: .file(path: "PeerXClip/PeerXClip.entitlements"),
     dependencies: [
         .package(product: "PeerXCore"),
-    ],
-    settings: .settings(
-        base: baseSettings.merging([
-            "MARKETING_VERSION": "1.0",
-            "CURRENT_PROJECT_VERSION": "1",
-            "TARGETED_DEVICE_FAMILY": "1",
-            "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
-            "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
-        ])
-    )
+    ]
 )
 
 let project = Project(
@@ -111,6 +98,6 @@ let project = Project(
     packages: [
         .local(path: "PeerXCore"),
     ],
-    settings: .settings(base: baseSettings),
+    settings: .settings(base: projectSettings),
     targets: [parent, clip]
 )
