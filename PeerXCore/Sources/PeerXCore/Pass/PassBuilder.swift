@@ -71,20 +71,12 @@ public struct PassBuilder: Sendable {
         }
         files["manifest.json"] = manifestData
 
-        let signatureData: Data
-        do {
-            signatureData = try signer.sign(manifestData)
-        } catch let e as PassError {
-            throw e
-        } catch {
-            throw .signing(reason: String(describing: error))
-        }
+        let signatureData = try signer.sign(manifestData)
         files["signature"] = signatureData
 
-        guard let archive = Archive(accessMode: .create) else {
-            throw .zipFailed
-        }
+        let archive: Archive
         do {
+            archive = try Archive(accessMode: .create)
             for (name, data) in files {
                 try archive.addEntry(
                     with: name,

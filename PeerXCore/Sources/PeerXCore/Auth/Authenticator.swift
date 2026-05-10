@@ -91,9 +91,9 @@ public actor Authenticator {
         let jwt: JWT
         do {
             jwt = try JWT(string: raw)
-        } catch let e as JWTError {
-            AppLog.auth.error("signIn JWT parse failed: \(String(describing: e), privacy: .public)")
-            throw .jwt(e)
+        } catch {
+            AppLog.auth.error("signIn JWT parse failed: \(String(describing: error), privacy: .public)")
+            throw .jwt(error)
         }
 
         do {

@@ -61,13 +61,27 @@ let parent = Target.target(
     )
 )
 
+let clipInfoPlist: [String: Plist.Value] = [
+    "CFBundleDisplayName": "PeerX",
+    "CFBundleLocalizations": .array([.string("en"), .string("ru")]),
+    "UIApplicationSceneManifest_Generation": .boolean(true),
+    "UIApplicationSupportsIndirectInputEvents": .boolean(true),
+    "UILaunchScreen_Generation": .boolean(true),
+    "UISupportedInterfaceOrientations": .array([.string("UIInterfaceOrientationPortrait")]),
+    "UIUserInterfaceStyle": "Dark",
+    "NSAppClip": .dictionary([
+        "NSAppClipRequestEphemeralUserNotification": .boolean(false),
+        "NSAppClipRequestLocationConfirmation": .boolean(false),
+    ]),
+]
+
 let clip = Target.target(
     name: "PeerXClip",
     destinations: .iOS,
     product: .appClip,
     bundleId: clipBundleID,
     deploymentTargets: deploymentTarget,
-    infoPlist: .file(path: "PeerXClip/Info.plist"),
+    infoPlist: .extendingDefault(with: clipInfoPlist),
     sources: ["PeerXClip/**"],
     resources: [
         "PeerXClip/Assets.xcassets",
@@ -82,13 +96,6 @@ let clip = Target.target(
             "MARKETING_VERSION": "1.0",
             "CURRENT_PROJECT_VERSION": "1",
             "TARGETED_DEVICE_FAMILY": "1",
-            "INFOPLIST_KEY_CFBundleDisplayName": "PeerX",
-            "INFOPLIST_KEY_CFBundleLocalizations": "en ru",
-            "INFOPLIST_KEY_UIUserInterfaceStyle": "Dark",
-            "INFOPLIST_KEY_UISupportedInterfaceOrientations": "UIInterfaceOrientationPortrait",
-            "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
-            "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
-            "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
             "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
             "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
         ])

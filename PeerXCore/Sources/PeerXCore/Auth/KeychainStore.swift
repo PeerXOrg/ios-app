@@ -91,8 +91,8 @@ public enum KeychainStore {
             try writeItem(account: account, data: data, synchronizable: true)
             AppLog.keychain.info("save \(account, privacy: .public) ok (synced) bundle=\(bundle, privacy: .public)")
             return
-        } catch let e as KeychainError {
-            AppLog.keychain.error("save \(account, privacy: .public) synced failed: \(String(describing: e), privacy: .public) — retrying local-only")
+        } catch {
+            AppLog.keychain.error("save \(account, privacy: .public) synced failed: \(String(describing: error), privacy: .public) — retrying local-only")
         }
         try writeItem(account: account, data: data, synchronizable: false)
         AppLog.keychain.info("save \(account, privacy: .public) ok (local) bundle=\(bundle, privacy: .public)")

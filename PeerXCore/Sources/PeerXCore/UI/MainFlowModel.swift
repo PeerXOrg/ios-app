@@ -93,15 +93,9 @@ public final class MainFlowModel {
         do {
             _ = try await auth.signIn(email: email, password: password)
             await start()
-        } catch let e as AuthError {
-            AppLog.flow.error("handleLogin AuthError: \(String(describing: e), privacy: .public)")
-            state = .failed(message: Self.describe(authError: e))
         } catch {
-            AppLog.flow.error("handleLogin error: \(String(describing: error), privacy: .public)")
-            state = .failed(message: String(
-                localized: "Unexpected error: \(String(describing: error))",
-                bundle: .module
-            ))
+            AppLog.flow.error("handleLogin AuthError: \(String(describing: error), privacy: .public)")
+            state = .failed(message: Self.describe(authError: error))
         }
     }
 
@@ -183,11 +177,8 @@ public final class MainFlowModel {
                 qrToken: token,
                 serialNumber: jwt.sub
             ).build(signer: signer)
-        } catch let e as PassError {
-            AppLog.flow.error("Pass build failed: \(String(describing: e), privacy: .public)")
-            return nil
         } catch {
-            AppLog.flow.error("Pass build unexpected error: \(String(describing: error), privacy: .public)")
+            AppLog.flow.error("Pass build failed: \(String(describing: error), privacy: .public)")
             return nil
         }
     }
@@ -269,7 +260,7 @@ public final class MainFlowModel {
         case .decoding:
             return String(localized: "Couldn't decode the response.", bundle: .module)
         case .jwt(let e):
-            return String(localized: "Invalid token: \(e)", bundle: .module)
+            return String(localized: "Invalid token: \(String(describing: e))", bundle: .module)
         case .missingToken:
             return String(localized: "Server didn't return a token.", bundle: .module)
         }

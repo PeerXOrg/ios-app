@@ -41,7 +41,7 @@ public enum PassAdder {
         }
 
         let library = PKPassLibrary()
-        guard let existing = library.pass(withPassTypeIdentifier: pass.passTypeIdentifier ?? "", serialNumber: pass.serialNumber),
+        guard let existing = library.pass(withPassTypeIdentifier: pass.passTypeIdentifier, serialNumber: pass.serialNumber),
               existing.serialNumber == pass.serialNumber
         else {
             return false
@@ -67,7 +67,7 @@ public enum PassAdder {
         let pass: PKPass
         do {
             pass = try PKPass(data: passData)
-            AppLog.pass.info("PKPass parsed serial=\(pass.serialNumber, privacy: .public) typeID=\(pass.passTypeIdentifier ?? "?", privacy: .public)")
+            AppLog.pass.info("PKPass parsed serial=\(pass.serialNumber, privacy: .public) typeID=\(pass.passTypeIdentifier, privacy: .public)")
         } catch {
             AppLog.pass.error("PKPass(data:) failed: \(String(describing: error), privacy: .public) — \(error.localizedDescription, privacy: .public)")
             return .failure(.parseFailed(underlying: error.localizedDescription))
