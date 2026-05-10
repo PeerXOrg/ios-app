@@ -1,0 +1,64 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "REPLACE_WITH_PASS_TYPE_ID",
+  "teamIdentifier": "REPLACE_WITH_TEAM_ID",
+  "organizationName": "REPLACE_WITH_ORG_NAME",
+  "serialNumber": "REPLACE_WITH_USER_SUB",
+  "description": "21 School Campus Pass",
+  "logoText": "PeerX",
+  "foregroundColor": "rgb(255, 255, 255)",
+  "backgroundColor": "rgb(0, 0, 0)",
+  "labelColor": "rgb(180, 180, 180)",
+  "expirationDate": "REPLACE_WITH_EXPIRATION_DATE",
+  "associatedStoreIdentifiers": [REPLACE_WITH_ADAM_ID],
+  "appLaunchURL": "https://peerx.org/wallet-refresh",
+  "barcodes": [
+    {
+      "format": "PKBarcodeFormatQR",
+      "message": "REPLACE_WITH_HEX_TOKEN",
+      "messageEncoding": "iso-8859-1",
+      "altText": "REPLACE_WITH_ALT_TEXT"
+    }
+  ],
+  "generic": {
+    "primaryFields": [
+      {
+        "key": "campus",
+        "label": "Campus",
+        "value": "21 School — Vyatskaya 27/42"
+      }
+    ],
+    "auxiliaryFields": [
+      {
+        "key": "expires",
+        "label": "Valid until",
+        "value": "REPLACE_WITH_EXPIRES_AT",
+        "dateStyle": "PKDateStyleShort",
+        "timeStyle": "PKDateStyleShort"
+      }
+    ],
+    "backFields": [
+      {
+        "key": "howto",
+        "label": "Refresh",
+        "value": "PeerX renews this code automatically before it expires. To refresh manually, open PeerX or tap the app icon on this pass."
+      },
+      {
+        "key": "campus_addr",
+        "label": "Address",
+        "value": "Moscow, Vyatskaya 27/42"
+      },
+      {
+        "key": "expires_full",
+        "label": "QR validity",
+        "value": "REPLACE_WITH_EXPIRES_AT",
+        "dateStyle": "PKDateStyleMedium",
+        "timeStyle": "PKDateStyleShort"
+      }
+    ]
+  },
+  "locations": [
+    { "latitude": 55.79635, "longitude": 37.58438, "relevantText": "21 School — Vyatskaya 27/42" }
+  ],
+  "maxDistance": 250
+}

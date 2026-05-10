@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+DerivedData/
+
+# Tuist generates these
+*.xcodeproj/
+*.xcworkspace/
+.tuist/
+Tuist/.build/
+Derived/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.pins
+# Package.resolved kept in PeerXCore/ for deterministic SPM resolution.
+# Anywhere else (Xcode-generated workspace caches) — ignored.
+**/xcshareddata/swiftpm/Package.resolved
+
+# Pass signing — private key, never commit
+PeerXCore/Sources/PeerXCore/Resources/certs/pass.key
+PeerXCore/Sources/PeerXCore/Resources/certs/pass.pem
+PeerXCore/Sources/PeerXCore/Resources/certs/*.cer
+PeerXCore/Sources/PeerXCore/Resources/certs/*.csr
+
+# Mise local cache
+.mise/
+.mise.local.toml
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
